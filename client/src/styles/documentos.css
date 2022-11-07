@@ -1,0 +1,32 @@
+.documentos-container {
+  position: absolute;
+  top: 0;
+  left: 15vw;
+  width: 70vw;
+  height: 100vh;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.7);
+  /* Estas dos ultimas lineas hacen que el 100% de documentos funcione bien */
+  display: flex;
+  flex-direction: column;
+}
+.documentos-ruta {
+  font-size: 2em;
+  margin: 20px;
+}
+.documentos-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px;
+  font-size: 1.5em;
+}
+.documentos {
+  overflow: auto;
+  height: 100%;
+}
+.documentos-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid rgba(0, 0, 0, 0.2) 1px;
+  font-size: 1.3em;
+}
