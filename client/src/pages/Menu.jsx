@@ -1,6 +1,7 @@
 import Nav from "../components/nav/Nav";
-import { useContext } from "react";
 import Documentos from "../components/main/Documentos";
+import Acciones from "../components/main/Acciones";
+import { useContext } from "react";
 import { showContext } from "../context/showContext";
 
 function Menu() {
@@ -9,6 +10,7 @@ function Menu() {
     <>
       <Nav />
       {showDocumentos && <Documentos />}
+      <Acciones />
     </>
   );
 }

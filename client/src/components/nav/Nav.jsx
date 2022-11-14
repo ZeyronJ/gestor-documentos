@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/nav.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -6,7 +5,7 @@ import { showContext } from "../../context/showContext";
 function Nav() {
   const navigate = useNavigate();
   const { setShowDocumentos } = useContext(showContext);
-  const [showUnidades, setShowUnidades] = useState(false);
+  const [showUnidades, setShowUnidades] = useState(false); //Se podria usar context
   return (
     <div className="container-nav">
       <div className="nav">

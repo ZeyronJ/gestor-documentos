@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { accionesContext } from "../../context/accionesContext";
 import { usePosts } from "../../context/postContext.jsx";
 import "../../styles/documentos.css";
 
 function Documentos() {
   const { posts, createPost } = usePosts();
   const [archivo, setArchivo] = useState(null);
+  const { setPostSelect } = useContext(accionesContext);
   return (
     <div className="documentos-container">
       <p className="documentos-ruta">Carpeta1 &gt; Carpeta actual</p>
@@ -20,7 +22,14 @@ function Documentos() {
       <div className="documentos">
         {posts.map((post) => {
           return (
-            <div className="documentos-item" key={post.id}>
+            <div
+              className="documentos-item"
+              onClick={() => {
+                setPostSelect(post.id);
+                console.log(post.id);
+              }}
+              key={post.id}
+            >
               <img
                 src="/src/assets/iconos/imagenes.png"
                 alt="imagen"
@@ -39,6 +48,7 @@ function Documentos() {
         onSubmit={(e) => {
           e.preventDefault();
           createPost({ archivo });
+          e.target.reset(); //e.target = form
         }}
       >
         <input
@@ -47,6 +57,10 @@ function Documentos() {
           onChange={(e) => setArchivo(e.target.files[0])}
         />
         <button>Guardar</button>
+      </form>
+      <form>
+        <input type="text" placeholder="Nombre carpeta" />
+        <button>Crear carpeta</button>
       </form>
     </div>
   );

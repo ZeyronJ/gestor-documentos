@@ -11,3 +11,7 @@ export const createPostRequests = async (post) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+export const deletePostRequests = async (id) =>
+  await axios.delete("http://localhost:4000/posts/" + id);
+export const downloadPostRequests = async (id) =>
+  await axios.get("http://localhost:4000/download/" + id);
