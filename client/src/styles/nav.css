@@ -10,28 +10,12 @@
   background-color: #edf3fb;
   position: relative;
 }
-.nav__unidades,
-.nav__oficiales,
-.nav__notificaciones,
-.nav__cuenta {
+.nav__seccion {
   height: max-content;
   width: inherit;
 }
-.nav__unidades__Documentos {
-  color: #5c6dff;
-  background-color: inherit;
-  border: none;
-  font-size: 1.4em;
-  font-weight: bold;
-  text-indent: 30px;
-  width: inherit;
-  text-align: left;
-  height: 70px;
-}
-.nav__unidades > button,
-.nav__oficiales > button,
-.nav__notificaciones > button,
-.nav__cuenta > button {
+
+.nav__seccion > button {
   width: inherit;
   height: 80px;
   background-color: inherit;
@@ -42,12 +26,21 @@
   font-size: 1.5em;
   font-weight: bold;
 }
-.nav__unidades > button:hover,
-.nav__unidades__Documentos:hover,
-.nav__oficiales > button:hover,
-.nav__notificaciones > button:hover,
-.nav__cuenta > button:hover {
+.nav__seccion__subseccion-button {
+  color: #5c6dff;
+  background-color: inherit;
+  border: none;
+  font-size: 1.4em;
+  font-weight: bold;
+  text-indent: 30px;
+  width: inherit;
+  text-align: left;
+  height: 70px;
+}
+.nav__seccion > button:hover,
+.nav__seccion__subseccion-button:hover {
   background-color: #bedaff;
+  cursor: pointer;
 }
 /* .nav__salir {
     position: absolute;
@@ -57,9 +50,16 @@
   } */
 .nav__salir {
   position: absolute;
-  width: 80px;
+  width: 100px;
   height: 80px;
-  margin: 50px 100px;
-  font-size: x-large;
+  margin: 50px 90px;
+  font-size: 80px;
+  background-color: inherit;
+  color: #4d5ffd;
+  border: none;
   bottom: 0px;
+}
+.nav__salir:hover {
+  color: black;
+  cursor: pointer;
 }

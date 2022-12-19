@@ -1,19 +1,5 @@
 import { pool } from "../db.js";
 import fs from "fs-extra";
-import download from "download";
-
-export const login = async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const [result] = await pool.query(
-      "SELECT * FROM usuarios WHERE username = ? AND password = ?",
-      [username, password]
-    );
-    res.json(result[0]);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
 
 export const getPosts = async (req, res) => {
   try {
@@ -21,9 +7,7 @@ export const getPosts = async (req, res) => {
       "SELECT * FROM documentos ORDER BY creado ASC"
     );
     const [result2] = await pool.query("SELECT * FROM usuarios");
-    //console.log(result2);
     result.forEach((post) => {
-      //result2.forEach((post2) => console.log(post2.id));
       post.propietario_usuarioFK = result2.filter(
         (user) => user.id == post.propietario_usuarioFK
       )[0].fullname;
@@ -36,18 +20,21 @@ export const getPosts = async (req, res) => {
 
 export const createPosts = async (req, res) => {
   try {
+    const { fk_carpeta, propietario } = req.body;
     const [result] = await pool.query(
-      "INSERT INTO documentos (titulo, path_documento) VALUES (?,?)",
-      [req.file.originalname, req.file.path]
+      "INSERT INTO documentos (titulo, path_documento, fk_carpeta) VALUES (?,?,?)",
+      [req.file.originalname, req.file.path, fk_carpeta]
     ); //Lo sisguien se realiza para obtener el atributo creado del documento y poder mandarselo al cliente y este no tenga que recargar pagina para verlo
     const [result2] = await pool.query("SELECT * FROM documentos WHERE id=?", [
       result.insertId,
     ]);
-    console.log(req.file);
+    //console.log(req.file, fk_carpeta);
     res.json({
       id: result.insertId,
       titulo: req.file.originalname,
       creado: result2[0].creado,
+      fk_carpeta: fk_carpeta,
+      propietario_usuarioFK: propietario,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -76,7 +63,6 @@ export const deletePosts = async (req, res) => {
     const [result] = await pool.query("DELETE FROM documentos WHERE id = (?)", [
       req.params.id,
     ]);
-    console.log(result2[0].path_documento, typeof result2[0].path_documento);
     await fs.remove(result2[0].path_documento);
     if (result.affectedRows === 0) {
       return res
@@ -90,8 +76,6 @@ export const deletePosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
-  //const { pathname: root } = new URL("../../", import.meta.url);
-  //const ruta = (root).substring()
   try {
     const [result] = await pool.query(
       "SELECT * FROM documentos WHERE id = (?)",
@@ -109,6 +93,51 @@ export const getPost = async (req, res) => {
   }
 };
 
+export const sendPost = async (req, res) => {
+  try {
+    const { id, fk_carpeta } = req.body;
+    await pool.query("UPDATE documentos SET fk_carpeta = ? WHERE id = ?", [
+      fk_carpeta,
+      id,
+    ]);
+    const [result] = await pool.query("SELECT * FROM documentos WHERE id = ?", [
+      id,
+    ]);
+    // const [result2] = await pool.query("SELECT * FROM usuarios");
+    // result.forEach((post) => {
+    //   post.propietario_usuarioFK = result2.filter(
+    //     (user) => user.id == post.propietario_usuarioFK
+    //   )[0].fullname;
+    // });
+    res.json(result[0]);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const validatePost = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await pool.query("UPDATE documentos SET validado = 1 WHERE id= ?", [id]);
+    const [result] = await pool.query("SELECT * FROM documentos WHERE id=?", [
+      id,
+    ]);
+    res.json(result[0]);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const oficialPost = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await pool.query("UPDATE documentos SET oficial = 1 WHERE id= ?", [id]);
+    const [result] = await pool.query("SELECT * FROM documentos WHERE id=?", [
+      id,
+    ]);
+    res.json(result[0]);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 // export const getPost = async (req, res) => {
 //   try {
 //     const [result] = await pool.query(

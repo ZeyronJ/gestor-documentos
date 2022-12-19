@@ -20,6 +20,7 @@
 }
 .acciones-containter > button:hover {
   background-color: #bedaff;
+  cursor: pointer;
 }
 .toast-eliminar {
   background-color: red;

@@ -1,20 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../styles/login.css";
-import { useNavigate } from "react-router-dom";
-import { loginRequests } from "../api/accounts";
+import { usuarioContext } from "../context/usuarioContext";
 
 function Login() {
-  const navigate = useNavigate();
   const [usuario, setUsuario] = useState("");
   const [contra, setContra] = useState("");
-  const enviarLogin = async (datos) => {
-    const res = await loginRequests(datos);
-    if (Object.entries(res.data).length == 0) {
-      alert("Usuario no encontrado");
-    } else {
-      navigate("/menu");
-    }
-  };
+  const { enviarLogin } = useContext(usuarioContext);
 
   return (
     <div className="Container-login">
