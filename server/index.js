@@ -16,7 +16,7 @@ const port = 4000;
 //middlewares
 app.use(express.json()); //procesar los datos del cliente (si es json)
 app.use(cors()); //areggla el error de seguridad cors, se puede especificar que paginas queremos darle permisos
-app.use(multer({ dest: "./subido" }).single("archivo"));
+app.use(multer({ dest: "./server/subido" }).single("archivo"));
 //rutas
 app.use(postRoutes);
 //io

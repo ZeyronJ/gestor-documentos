@@ -64,7 +64,7 @@ function Acciones_ofc() {
         >
           Abrir
         </button>
-        {user.tipo_usuario == 1 && <button>Editar</button>}
+        {/* {user.tipo_usuario == 1 && <button>Editar</button>} */}
 
         <button
           onClick={() => {

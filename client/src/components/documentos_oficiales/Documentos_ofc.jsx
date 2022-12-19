@@ -102,7 +102,7 @@ function Documentos_ofc() {
       </div>
       <div className="documentos">
         {posts.map((post) => {
-          if (post.fk_carpeta == ruta[ruta.length - 1]) {
+          if (post.fk_carpeta == ruta[ruta.length - 1] || post.oficial == 1) {
             return (
               <div
                 className={"documentos-item"}
@@ -135,54 +135,55 @@ function Documentos_ofc() {
           }
         })}
       </div>
-      {(ruta[ruta.length - 1] != 1 || user.tipo_usuario == 1) && (
-        <div>
-          <form
-            className="form-documentos"
-            onSubmit={(e) => {
-              e.preventDefault();
-              createPost({
-                archivo,
-                fk_carpeta: ruta[ruta.length - 1],
-                propietario: user.fullname,
-              });
-              e.target.reset(); //e.target = form
-            }}
-          >
-            <input
-              type="file"
-              name="archivo"
-              onChange={(e) => setArchivo(e.target.files[0])}
-            />
-            <button>Guardar</button>
-          </form>
-          <div className="form-carpetas-container">
+      {user.tipo_usuario == 1 &&
+        (user.tipo_usuario == 2 || ruta[ruta.length - 1] != 1) && (
+          <div>
             <form
-              className="form-carpetas"
+              className="form-documentos"
               onSubmit={(e) => {
                 e.preventDefault();
-                createFolder([
-                  {
-                    titulo,
-                    fk_carpeta: ruta[ruta.length - 1],
-                    propietario: user.fullname,
-                  },
-                  false,
-                ]);
-
+                createPost({
+                  archivo,
+                  fk_carpeta: ruta[ruta.length - 1],
+                  id_usuario: user.id,
+                });
                 e.target.reset(); //e.target = form
               }}
             >
               <input
-                type="text"
-                placeholder="Nombre carpeta"
-                onChange={(e) => setTitulo(e.target.value)}
+                type="file"
+                name="archivo"
+                onChange={(e) => setArchivo(e.target.files[0])}
               />
-              <button>Aceptar</button>
+              <button>Guardar</button>
             </form>
+            <div className="form-carpetas-container">
+              <form
+                className="form-carpetas"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  createFolder([
+                    {
+                      titulo,
+                      fk_carpeta: ruta[ruta.length - 1],
+                      id_usuario: user.id,
+                    },
+                    false,
+                  ]);
+
+                  e.target.reset(); //e.target = form
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="Nombre carpeta"
+                  onChange={(e) => setTitulo(e.target.value)}
+                />
+                <button>Aceptar</button>
+              </form>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }

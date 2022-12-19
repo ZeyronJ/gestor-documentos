@@ -143,9 +143,13 @@ function Documentos() {
                 key={post.id}
               >
                 <img
-                  src="/src/assets/iconos/imagenes.png"
-                  alt="carpeta"
-                  style={{ height: "18px", marginLeft: "10px" }}
+                  src="/src/assets/iconos/word.png"
+                  alt="word"
+                  style={{
+                    height: "20px",
+                    marginLeft: "3px",
+                    marginTop: "2px",
+                  }}
                 ></img>
                 <p style={{ width: "37%", textIndent: "5px" }}>{post.titulo}</p>
                 <p style={{ width: "43%", textAlign: "left" }}>
@@ -165,7 +169,7 @@ function Documentos() {
           }
         })}
       </div>
-      {(ruta[ruta.length - 1] != 1 || user.tipo_usuario == 1) && (
+      {(ruta[ruta.length - 1] != folders[0].id || user.tipo_usuario == 1) && (
         <div>
           <form
             className="form-documentos"
@@ -174,7 +178,7 @@ function Documentos() {
               createPost({
                 archivo,
                 fk_carpeta: ruta[ruta.length - 1],
-                propietario: user.fullname,
+                id_usuario: user.id,
               });
               e.target.reset(); //e.target = form
             }}
@@ -203,7 +207,7 @@ function Documentos() {
                     {
                       titulo,
                       fk_carpeta: ruta[ruta.length - 1],
-                      propietario: user.fullname,
+                      id_usuario: user.id,
                     },
                     idPermisos,
                   ]);

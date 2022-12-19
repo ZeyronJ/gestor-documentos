@@ -36,7 +36,7 @@ function Nav() {
             <div
               style={{
                 width: "inherit",
-                height: "210px",
+                height: "180px",
                 background: "inherit",
               }}
             >
@@ -112,7 +112,7 @@ function Nav() {
               <div
                 style={{
                   width: "inherit",
-                  height: "140px",
+                  height: "120px",
                   background: "inherit",
                 }}
               >

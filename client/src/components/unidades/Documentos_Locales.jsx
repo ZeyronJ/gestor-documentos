@@ -77,7 +77,10 @@ function Documentos_Locales() {
       <hr />
       <div className="folders">
         {folders.map((folder) => {
-          if (folder.fk_carpeta == ruta[ruta.length - 1]) {
+          if (
+            folder.fk_carpeta == ruta[ruta.length - 1] &&
+            folder.propietario_usuarioFK == user.fullname
+          ) {
             return (
               <div
                 className="documentos-item"
@@ -126,7 +129,10 @@ function Documentos_Locales() {
       </div>
       <div className="documentos">
         {posts.map((post) => {
-          if (post.fk_carpeta == ruta[ruta.length - 1]) {
+          if (
+            post.fk_carpeta == ruta[ruta.length - 1] &&
+            post.propietario_usuarioFK == user.fullname
+          ) {
             return (
               <div
                 className={
@@ -174,7 +180,7 @@ function Documentos_Locales() {
               createPost({
                 archivo,
                 fk_carpeta: ruta[ruta.length - 1],
-                propietario: user.fullname,
+                id_usuario: user.id,
               });
               e.target.reset(); //e.target = form
             }}
@@ -195,7 +201,7 @@ function Documentos_Locales() {
                   {
                     titulo,
                     fk_carpeta: ruta[ruta.length - 1],
-                    propietario: user.fullname,
+                    id_usuario: user.id,
                   },
                   false,
                 ]);

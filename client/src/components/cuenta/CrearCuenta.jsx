@@ -91,7 +91,12 @@ function CrearCuenta(props) {
           value={nombre}
         />
         <br />
-        <label>Tipo usuario </label>
+        <label>
+          Tipo usuario<br></br>
+          <strong>
+            1:Admin 2:Director 3:Secretaria 4:Academico 5:Funcionario
+          </strong>
+        </label>
         <input
           type="number"
           onChange={(e) => {

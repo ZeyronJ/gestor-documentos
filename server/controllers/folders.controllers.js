@@ -2,20 +2,23 @@ import { pool } from "../db.js";
 import fs from "fs-extra";
 export const createFolders = async (req, res) => {
   try {
-    const { titulo, fk_carpeta, propietario } = req.body;
+    const { titulo, fk_carpeta, id_usuario } = req.body;
     const [result] = await pool.query(
-      "INSERT INTO carpetas (titulo, fk_carpeta) VALUES (?,?)",
-      [titulo, fk_carpeta]
+      "INSERT INTO carpetas (titulo, fk_carpeta, propietario_usuarioFK) VALUES (?,?,?)",
+      [titulo, fk_carpeta, id_usuario]
     ); //Lo sisguien se realiza para obtener el atributo creado del documento y poder mandarselo al cliente y este no tenga que recargar pagina para verlo
     const [result2] = await pool.query("SELECT * FROM carpetas WHERE id=?", [
       result.insertId,
+    ]);
+    const [result3] = await pool.query("SELECT * FROM usuarios WHERE id=?", [
+      id_usuario,
     ]);
     res.json({
       id: result.insertId,
       titulo: titulo,
       creado: result2[0].creado,
       fk_carpeta: fk_carpeta,
-      propietario_usuarioFK: propietario,
+      propietario_usuarioFK: result3[0].fullname,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });

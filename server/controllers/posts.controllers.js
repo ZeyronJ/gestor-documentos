@@ -20,13 +20,16 @@ export const getPosts = async (req, res) => {
 
 export const createPosts = async (req, res) => {
   try {
-    const { fk_carpeta, propietario } = req.body;
+    const { fk_carpeta, id_usuario } = req.body;
     const [result] = await pool.query(
-      "INSERT INTO documentos (titulo, path_documento, fk_carpeta) VALUES (?,?,?)",
-      [req.file.originalname, req.file.path, fk_carpeta]
+      "INSERT INTO documentos (titulo, path_documento, fk_carpeta, propietario_usuarioFK) VALUES (?,?,?,?)",
+      [req.file.originalname, req.file.path, fk_carpeta, id_usuario]
     ); //Lo sisguien se realiza para obtener el atributo creado del documento y poder mandarselo al cliente y este no tenga que recargar pagina para verlo
     const [result2] = await pool.query("SELECT * FROM documentos WHERE id=?", [
       result.insertId,
+    ]);
+    const [result3] = await pool.query("SELECT * FROM usuarios WHERE id=?", [
+      id_usuario,
     ]);
     //console.log(req.file, fk_carpeta);
     res.json({
@@ -34,7 +37,7 @@ export const createPosts = async (req, res) => {
       titulo: req.file.originalname,
       creado: result2[0].creado,
       fk_carpeta: fk_carpeta,
-      propietario_usuarioFK: propietario,
+      propietario_usuarioFK: result3[0].fullname,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });

@@ -111,17 +111,19 @@ function Acciones() {
         >
           Abrir
         </button>
-        <button>Editar</button>
-        <button
-          onClick={() => {
-            validatePost({ id: postSelect.id });
-            if (user.tipo_usuario == 1) {
-              oficialPost({ id: postSelect.id });
-            }
-          }}
-        >
-          Validar
-        </button>
+        {/* <button>Editar</button> */}
+        {user.tipo_usuario < 3 && (
+          <button
+            onClick={() => {
+              validatePost({ id: postSelect.id });
+              if (user.tipo_usuario == 1) {
+                oficialPost({ id: postSelect.id });
+              }
+            }}
+          >
+            Validar
+          </button>
+        )}
         <button
           onClick={() => {
             if (typeHandler == "post") {
@@ -148,24 +150,26 @@ function Acciones() {
         >
           {moverBool ? "Mover a:" + carpeta().titulo : "Mover a"}
         </button>
-        <button
-          onClick={() => {
-            if (typeHandler == "post") {
-              handleDelete(postSelect);
-            } else {
-              handleDelete(folderSelect);
-            }
-          }}
-        >
-          Eliminar
-        </button>
-        <button
+        {user.tipo_usuario < 4 && (
+          <button
+            onClick={() => {
+              if (typeHandler == "post") {
+                handleDelete(postSelect);
+              } else {
+                handleDelete(folderSelect);
+              }
+            }}
+          >
+            Eliminar
+          </button>
+        )}
+        {/* <button
           onClick={() => {
             console.log("folders: ", folders);
           }}
         >
           Notificar
-        </button>
+        </button> */}
       </div>
       ;
     </>
